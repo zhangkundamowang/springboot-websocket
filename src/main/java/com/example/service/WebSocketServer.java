@@ -20,6 +20,7 @@ public class WebSocketServer {
     //concurrent包的线程安全Set，用来存放每个客户端对应的WebSocketServer对象。
     private static ConcurrentHashMap<String, Session> sessionPools = new ConcurrentHashMap<>();
 
+
     //发送消息
     public void sendMessage(Session session, String message) throws IOException {
         if(session != null){
@@ -54,6 +55,7 @@ public class WebSocketServer {
     @OnOpen
     public void onOpen(Session session, @PathParam(value = "username") String userName){
         sessionPools.put(userName, session);
+        System.out.println("sessionPools: "+sessionPools);
         addOnlineCount();
         System.out.println(userName + "加入webSocket！当前人数为" + onlineNum);
         // 广播上线消息
